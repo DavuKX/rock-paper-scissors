@@ -1,35 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e9edc9;
+}
+
 #title {
     font-family:'Courier New', Courier, monospace;
     text-align: center;
+    background-color: #a8dadc;
+    padding: 25px;
 }
 
-#game {
+h1 {
+    margin: 0;
+}
+
+
+#gameboard {
+    text-align: center;
+}
+
+img {
+    max-width: 150px;
+}
+
+#players {
+    margin: 50px;
     display: flex;
-    justify-content: space-between;
-    margin: 30px;
+    justify-content: center;
 }
 
-#score {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    width: 10%;
+#player, #computer {
+    padding: 30px;
 }
 
-#board {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    width: 85%;
-    margin-left: 5px;
-}
 
 #choices {
     display: flex;
     justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
+
 }
 
 .choice {
     text-align: center;
     margin: auto;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #a8dadc;
 }
