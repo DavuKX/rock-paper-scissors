@@ -11,7 +11,8 @@ function getComputerChoice(CHOICES)
     return choice;
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) 
+{
     if ((playerSelection - computerSelection) === 0)
         return 0; // 0 for tie
     
@@ -57,5 +58,3 @@ function game()
     };
     console.log(`You won ${gamesWon} out of 5 games.`);
 };
-
-game();
