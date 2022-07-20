@@ -90,7 +90,7 @@ function playGame(e) {
     e.stopPropagation();
 };
 
-const choices = document.querySelectorAll('.choice')
+const choices = document.querySelectorAll('.choice');
 
 choices.forEach(choice => choice.addEventListener('click', playGame, {
     capture: false,
