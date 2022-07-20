@@ -1,8 +1,12 @@
-const CHOICES = {"paper": 0, "rock": 1, "scissors": 2};
+const CHOICES = {"Paper": 0, "Rock": 1, "Scissors": 2};
+let winsPlayer = 0;
+let winsComputer = 0;
 
 
 function getKeyFromValue(value)
+{
     return Object.keys(CHOICES).find(key => CHOICES[key] === value);
+}
 
 
 function getComputerChoice(CHOICES) 
@@ -29,32 +33,65 @@ function playRound(playerSelection, computerSelection)
         return 2;
 }
 
-function game() 
-{
 
-    let playerSelection;
-    let gamesWon = 0;
+function playGame(e) {
+
+    let computerChoice = getComputerChoice();
+    let playerChoice   = CHOICES[this.childNodes[3].textContent];
+    let result         = playRound(playerChoice, computerChoice);
+    let players        = document.querySelector('#players');
+    let player         = players.childNodes[1];
+    let computer       = players.childNodes[3];
+    let playerScore    = player.childNodes[5];
+    let computerScore  = computer.childNodes[5];
+    let score          = document.getElementById('result-text');
+
+    score.textContent = ""
+    document.getElementById('player-selection').src    = `static/images/${getKeyFromValue(playerChoice).toLowerCase()}.png`;
+    document.getElementById('computer-selection').src  = `static/images/${getKeyFromValue(computerChoice).toLowerCase()}.png`;
     
-    for (let i = 0; i < 5; i++) 
+
+    if (result == 0)
+        score.textContent = "It's a tie!";
+    
+    else if (result == 1)
     {
-    
-        computerSelection = getComputerChoice();
-        playerSelection = prompt("Type in your choice: ").toLowerCase();
-    
-        while (!(playerSelection in CHOICES)) 
-            playerSelection = prompt("Type a correct choice (paper, rock, scissors): ").toLowerCase();
+        winsComputer             += 1;
+        computerScore.textContent = `Computer: ${winsComputer}`;
+        score.textContent         = 'You lose!';
 
-        if (playRound(CHOICES[playerSelection], computerSelection) === 0)
-            console.log("It's a tie!");
-        
-        else if (playRound(CHOICES[playerSelection], computerSelection) === 1) 
-            console.log(`You lose! ${getKeyFromValue(computerSelection)} beats ${playerSelection}`);
-        
-        else if (playRound(CHOICES[playerSelection], computerSelection) === 2) 
+        if (winsComputer === 5) 
         {
-            gamesWon += 1;
-            console.log(`You win! ${playerSelection} beats ${getKeyFromValue(computerSelection)}`);
+            winsPlayer   = 0;
+            winsComputer = 0;
+            computerScore.textContent = `Computer: ${winsComputer}`;
+            playerScore.textContent   = `Computer: ${winsPlayer}`;
+            score.textContent         = "The computer wins the match";
         };
+
+    }
+
+    else if (result == 2)
+    {
+        winsPlayer += 1;
+        playerScore.textContent = `Player: ${winsPlayer}`;
+        score.textContent = "You win!";
+
+        if (winsPlayer === 5) 
+        {
+            winsPlayer   = 0;
+            winsComputer = 0;
+            playerScore.textContent   = `Computer: ${winsPlayer}`;
+            computerScore.textContent = `Computer: ${winsComputer}`;
+            score.textContent         = "The player wins the match!";
+        };
+
     };
-    console.log(`You won ${gamesWon} out of 5 games.`);
+    e.stopPropagation();
 };
+
+const choices = document.querySelectorAll('.choice')
+
+choices.forEach(choice => choice.addEventListener('click', playGame, {
+    capture: false,
+}));
